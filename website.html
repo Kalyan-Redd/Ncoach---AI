@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NutriCoach AI — Personalised Indian Food Nutrition Coach</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--green:#0a7c4e;--gl:#10b981;--gp:#d1fae5;--dark:#0a0f0d;--dark2:#111a15;--cream:#f8f6f0;--warm:#faf7f2;--text:#1a2e1f;--muted:#5a7a65;--border:#e2ebe5}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);line-height:1.6;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 60px;background:rgba(248,246,240,.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:all .3s}
+.nlogo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--dark)}
+.nlogoicon{width:38px;height:38px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.nlinks{display:flex;align-items:center;gap:32px}
+.nlinks a{font-size:14px;color:var(--muted);text-decoration:none;transition:color .2s}
+.nlinks a:hover{color:var(--green)}
+.ncta{background:var(--dark);color:#fff;padding:10px 24px;border-radius:24px;font-size:14px;font-weight:500;text-decoration:none;transition:all .2s}
+.ncta:hover{background:var(--green)}
+
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;padding:120px 60px 80px;background:var(--warm);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,#10b98118 0%,transparent 70%);border-radius:50%}
+.hbadge{display:inline-flex;align-items:center;gap:8px;background:var(--gp);color:var(--green);padding:6px 16px;border-radius:24px;font-size:12px;font-weight:500;margin-bottom:24px;border:1px solid #10b98130;animation:fadeUp .6s ease both}
+.hero h1{font-family:'Fraunces',serif;font-size:56px;font-weight:700;line-height:1.1;color:var(--dark);margin-bottom:20px;animation:fadeUp .6s .1s ease both}
+.hero h1 em{font-style:italic;color:var(--green)}
+.hsub{font-size:17px;color:var(--muted);line-height:1.7;margin-bottom:36px;max-width:480px;animation:fadeUp .6s .2s ease both}
+.hbtns{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp .6s .3s ease both}
+.btn1{background:var(--dark);color:#fff;padding:14px 32px;border-radius:32px;font-size:15px;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn1:hover{background:var(--green);transform:translateY(-1px)}
+.btn2{background:transparent;color:var(--text);padding:14px 32px;border-radius:32px;font-size:15px;font-weight:500;text-decoration:none;border:1.5px solid var(--border);display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn2:hover{border-color:var(--green);color:var(--green)}
+.hstats{display:flex;gap:32px;margin-top:48px;animation:fadeUp .6s .4s ease both}
+.hsv{font-family:'DM Mono',monospace;font-size:28px;font-weight:500;color:var(--dark)}
+.hsl{font-size:12px;color:var(--muted);margin-top:2px}
+
+.hvisual{position:relative;z-index:1;animation:fadeUp .8s .2s ease both}
+.hphone{background:var(--dark2);border-radius:28px;padding:4px;box-shadow:0 40px 80px rgba(0,0,0,.25);max-width:360px;margin:0 auto}
+.pscreen{background:#0d1117;border-radius:24px;padding:20px;min-height:480px;overflow:hidden}
+.pheader{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.ptitle{color:#fff;font-size:15px;font-weight:600}
+.pbadge{background:#10b98120;color:#10b981;padding:4px 10px;border-radius:12px;font-size:10px;font-weight:600}
+.pimgarea{background:#1a2332;border-radius:14px;height:160px;display:flex;align-items:center;justify-content:center;font-size:48px;margin-bottom:16px;position:relative;overflow:hidden}
+.dbox{position:absolute;border:2px solid #10b981;border-radius:6px;display:flex;align-items:flex-start;justify-content:flex-start}
+.dlabel{background:#10b981;color:#fff;font-size:8px;font-weight:600;padding:2px 5px;border-radius:3px;white-space:nowrap}
+.db1{top:20px;left:30px;width:100px;height:90px}
+.db2{top:40px;right:20px;width:80px;height:80px;border-color:#f59e0b}
+.db2 .dlabel{background:#f59e0b}
+.db3{bottom:10px;left:60px;width:90px;height:60px;border-color:#3b82f6}
+.db3 .dlabel{background:#3b82f6}
+.prow{display:flex;align-items:center;justify-content:space-between;background:#1a2332;border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.pdish{color:#e5e7eb;font-size:12px;font-weight:500}
+.pcal{color:#10b981;font-size:12px;font-family:'DM Mono',monospace;font-weight:500}
+.pconf{color:#6b7280;font-size:10px}
+.ptotal{background:#10b98120;border:1px solid #10b98130;border-radius:10px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.ptlabel{color:#10b981;font-size:12px;font-weight:600}
+.ptval{color:#10b981;font-size:16px;font-family:'DM Mono',monospace;font-weight:500}
+
+.fcard{position:absolute;background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px 16px;box-shadow:0 8px 32px rgba(0,0,0,.08);animation:float 4s ease-in-out infinite}
+.fc1{top:-20px;right:-40px;animation-delay:0s}
+.fc2{bottom:40px;left:-60px;animation-delay:1.5s}
+.fcl{font-size:10px;color:var(--muted);font-weight:500;margin-bottom:4px}
+.fcv{font-size:18px;font-weight:600;color:var(--dark);font-family:'DM Mono',monospace}
+.fcs{font-size:10px;color:var(--green);font-weight:500;margin-top:2px}
+
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+section{padding:100px 60px}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'';width:24px;height:2px;background:var(--green)}
+.stitle{font-family:'Fraunces',serif;font-size:44px;font-weight:700;line-height:1.15;color:var(--dark);margin-bottom:16px}
+.ssub{font-size:17px;color:var(--muted);max-width:560px;line-height:1.7}
+
+.benefits{background:var(--dark);position:relative;overflow:hidden}
+.benefits::before{content:'';position:absolute;top:0;right:0;width:500px;height:500px;background:radial-gradient(circle,#10b98115 0%,transparent 70%)}
+.benefits .eyebrow{color:#10b981}
+.benefits .stitle{color:#fff}
+.benefits .ssub{color:#6b7280}
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px}
+.bcard{background:#ffffff08;border:1px solid #ffffff10;border-radius:20px;padding:32px;transition:all .3s}
+.bcard:hover{background:#ffffff12;border-color:#10b98130;transform:translateY(-4px)}
+.bicon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px}
+.big{background:#10b98120}.bia{background:#f59e0b20}.bib{background:#3b82f620}
+.btitle{font-size:18px;font-weight:600;color:#fff;margin-bottom:10px}
+.btext{font-size:14px;color:#6b7280;line-height:1.7}
+.btag{display:inline-flex;align-items:center;gap:5px;background:#10b98115;color:#10b981;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;margin-top:16px}
+
+.how{background:var(--warm)}
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:60px;position:relative}
+.sgrid::before{content:'';position:absolute;top:40px;left:12%;right:12%;height:1px;background:var(--border);z-index:0}
+.step{text-align:center;padding:0 20px;position:relative;z-index:1}
+.snum{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px;border:2px solid var(--border);background:var(--cream)}
+.step.act .snum{background:var(--dark);border-color:var(--dark)}
+.steptitle{font-size:16px;font-weight:600;color:var(--dark);margin-bottom:8px}
+.steptext{font-size:13px;color:var(--muted);line-height:1.6}
+.sttech{display:inline-block;background:var(--gp);color:var(--green);padding:3px 10px;border-radius:12px;font-size:10px;font-weight:600;margin-top:10px;font-family:'DM Mono',monospace}
+
+.features{background:var(--cream)}
+.fbento{display:grid;grid-template-columns:repeat(12,1fr);gap:20px;margin-top:60px}
+.fc-b{background:#fff;border:1px solid var(--border);border-radius:20px;padding:28px;overflow:hidden;transition:all .3s;position:relative}
+.fc-b:hover{box-shadow:0 12px 40px rgba(10,124,78,.08);transform:translateY(-2px)}
+.fc-b.f1{grid-column:span 5;grid-row:span 2}
+.fc-b.f2{grid-column:span 7}
+.fc-b.f3{grid-column:span 4}
+.fc-b.f4{grid-column:span 3}
+.fc-b.f5{grid-column:span 6}
+.fc-b.f6{grid-column:span 6}
+.ftag{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;margin-bottom:14px}
+.tg{background:var(--gp);color:var(--green)}.ta{background:#fef3c7;color:#92400e}.tb{background:#dbeafe;color:#1e40af}.tr{background:#fee2e2;color:#991b1b}.tp{background:#ede9fe;color:#5b21b6}
+.ftitle{font-size:18px;font-weight:600;color:var(--dark);margin-bottom:10px}
+.ftext{font-size:13px;color:var(--muted);line-height:1.7}
+.ddetect{background:#0d1117;border-radius:12px;padding:14px;margin-top:16px}
+.drow{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #ffffff0a}
+.drow:last-child{border:none}
+.ddish{color:#e5e7eb;font-size:12px}.dconf{background:#10b98120;color:#10b981;padding:2px 8px;border-radius:10px;font-size:10px}.dcal{color:#10b981;font-size:12px;font-family:'DM Mono',monospace}
+.nbars{margin-top:16px}
+.nb{margin-bottom:12px}
+.nbh{display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px}
+.nbl{color:var(--text);font-weight:500}.nbv{color:var(--muted);font-family:'DM Mono',monospace}
+.nbt{background:#f3f4f6;border-radius:4px;height:6px;overflow:hidden}
+.nbf{height:6px;border-radius:4px}
+.rmini{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.rmitem{background:#f9fafb;border-radius:10px;padding:12px;border:1px solid var(--border)}
+.rmscore{font-size:22px;font-weight:600;font-family:'DM Mono',monospace}
+.rmlabel{font-size:10px;color:var(--muted);margin-top:2px}
+.rmbar{height:3px;border-radius:2px;margin-top:8px}
+.cdemo{margin-top:14px}
+.cm{border-radius:12px;padding:10px 13px;font-size:12px;line-height:1.6;margin-bottom:8px}
+.cu{background:#f3f4f6;color:#374151;border-radius:12px 12px 4px 12px;max-width:80%;margin-left:auto}
+.cb{background:#0d1117;color:#e5e7eb;border-radius:12px 12px 12px 4px}
+
+.who{background:var(--warm)}
+.wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px}
+.wcard{border-radius:20px;padding:32px;position:relative;overflow:hidden;transition:transform .3s}
+.wcard:hover{transform:translateY(-4px)}
+.wcdk{background:var(--dark);color:#fff}.wclt{background:var(--gp)}.wcwm{background:#fef3c7}
+.wemoji{font-size:40px;margin-bottom:16px;display:block}
+.wtitle{font-size:20px;font-weight:600;margin-bottom:10px}
+.wcdk .wtitle{color:#fff}
+.wtext{font-size:14px;line-height:1.7}
+.wcdk .wtext{color:#9ca3af}
+.wconds{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.wpill{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:500}
+.pd{background:#ffffff15;color:#e5e7eb}.pg{background:#10b98130;color:var(--green)}.pa{background:#f59e0b30;color:#92400e}
+
+.research{background:var(--cream)}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;margin-top:60px}
+.rstats{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.rscard{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px}
+.rsval{font-size:36px;font-weight:700;font-family:'Fraunces',serif;color:var(--green)}
+.rslabel{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5}
+.rssrc{font-size:10px;color:#9ca3af;margin-top:8px;font-style:italic}
+.rrefs{display:flex;flex-direction:column;gap:16px}
+.rref{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;border-left:4px solid var(--green)}
+.rreftitle{font-size:14px;font-weight:600;color:var(--dark);margin-bottom:6px}
+.rrefj{font-size:12px;color:var(--green);font-style:italic}
+.rreff{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
+
+.tech{background:var(--dark)}
+.tech .eyebrow{color:#10b981}
+.tech .stitle{color:#fff}
+.tech .ssub{color:#6b7280}
+.tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:60px}
+.tcard{background:#ffffff08;border:1px solid #ffffff10;border-radius:16px;padding:24px;text-align:center;transition:all .3s}
+.tcard:hover{background:#ffffff12;border-color:#10b98130}
+.ticon{font-size:32px;margin-bottom:12px;display:block}
+.tname{font-size:15px;font-weight:600;color:#fff;margin-bottom:6px}
+.tdesc{font-size:12px;color:#6b7280;line-height:1.5}
+.tbadge{display:inline-block;background:#10b98115;color:#10b981;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:600;margin-top:10px;font-family:'DM Mono',monospace}
+
+.ctasec{background:var(--green);text-align:center;padding:100px 60px;position:relative;overflow:hidden}
+.ctasec::before{content:'';position:absolute;top:-200px;right:-200px;width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,255,.1) 0%,transparent 70%);border-radius:50%}
+.ctatitle{font-family:'Fraunces',serif;font-size:52px;font-weight:700;color:#fff;margin-bottom:16px;position:relative}
+.ctasub{font-size:18px;color:rgba(255,255,255,.8);margin-bottom:40px;position:relative}
+.ctabtn{background:#fff;color:var(--green);padding:16px 40px;border-radius:32px;font-size:16px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .2s;position:relative}
+.ctabtn:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,0,0,.2)}
+
+footer{background:var(--dark);padding:60px;color:#6b7280}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:48px}
+.fbname{font-family:'Fraunces',serif;font-size:20px;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.fbdesc{font-size:13px;line-height:1.7;margin-bottom:20px}
+.ftags{display:flex;flex-wrap:wrap;gap:6px}
+.ftag{background:#ffffff0a;border:1px solid #ffffff12;color:#9ca3af;padding:4px 12px;border-radius:20px;font-size:11px}
+.fctitle{color:#fff;font-size:13px;font-weight:600;margin-bottom:16px}
+.fclinks{display:flex;flex-direction:column;gap:10px}
+.fclinks a{color:#6b7280;font-size:13px;text-decoration:none;transition:color .2s}
+.fclinks a:hover{color:#10b981}
+.fbot{border-top:1px solid #ffffff10;padding-top:32px;display:flex;justify-content:space-between;align-items:center}
+.fcopy{font-size:13px}
+.flicense{background:#10b98115;color:#10b981;padding:4px 12px;border-radius:12px;font-size:11px;font-weight:600}
+
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nlogo">
+    <div class="nlogoicon">🥗</div>
+    NutriCoach AI
+  </div>
+  <div class="nlinks">
+    <a href="#benefits">Benefits</a>
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#who">Who it's for</a>
+    <a href="#research">Research</a>
+  </div>
+  <a href="#cta" class="ncta">Launch App →</a>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="hbadge">🇮🇳 Built for Indian patients · CC BY 4.0 · AIML Research</div>
+    <h1>Your <em>lifelong</em><br>AI nutrition coach</h1>
+    <p class="hsub">Upload a photo of any Indian meal. The AI detects every food item individually, counts calories, monitors clinical limits for CKD, diabetes and hypertension — and coaches you toward living healthy past 70.</p>
+    <div class="hbtns">
+      <a href="#" class="btn1">🚀 Launch App</a>
+      <a href="#how" class="btn2">See how it works</a>
+    </div>
+    <div class="hstats">
+      <div><div class="hsv">80%+</div><div class="hsl">Detection accuracy</div></div>
+      <div><div class="hsv">30</div><div class="hsl">Indian dish classes</div></div>
+      <div><div class="hsv">6%</div><div class="hsl">Hallucination rate (RAG)</div></div>
+    </div>
+  </div>
+  <div class="hvisual">
+    <div class="hphone">
+      <div class="pscreen">
+        <div class="pheader">
+          <span class="ptitle">📷 Meal detected</span>
+          <span class="pbadge">YOLOv8 LIVE</span>
+        </div>
+        <div class="pimgarea">
+          🍛
+          <div class="dbox db1"><span class="dlabel">Biryani 94%</span></div>
+          <div class="dbox db2"><span class="dlabel">Dal 88%</span></div>
+          <div class="dbox db3"><span class="dlabel">Rice 82%</span></div>
+        </div>
+        <div class="prow"><span class="pdish">🟢 Biryani</span><span class="pconf">94%</span><span class="pcal">290 kcal</span></div>
+        <div class="prow"><span class="pdish">🟡 Dal</span><span class="pconf">88%</span><span class="pcal">180 kcal</span></div>
+        <div class="prow"><span class="pdish">🟢 WhiteRice</span><span class="pconf">82%</span><span class="pcal">200 kcal</span></div>
+        <div class="ptotal"><span class="ptlabel">🔥 Total plate</span><span class="ptval">670 kcal</span></div>
+      </div>
+    </div>
+    <div class="fcard fc1">
+      <div class="fcl">⚠ CKD Alert</div>
+      <div class="fcv">K: 71%</div>
+      <div class="fcs">Watch potassium today</div>
+    </div>
+    <div class="fcard fc2">
+      <div class="fcl">AI Coach says</div>
+      <div class="fcv" style="font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;color:#0d1117;max-width:140px;">Try lauki sabzi for dinner tonight</div>
+    </div>
+  </div>
+</section>
+
+<section class="benefits" id="benefits">
+  <div class="eyebrow reveal">Why NutriCoach AI</div>
+  <h2 class="stitle reveal">Most apps track calories.<br>We track your <em style="font-style:italic;color:#10b981;">health.</em></h2>
+  <p class="ssub reveal">Built specifically for Indian patients managing chronic conditions — where diet mistakes have real clinical consequences.</p>
+  <div class="bgrid reveal">
+    <div class="bcard">
+      <div class="bicon big">📷</div>
+      <div class="btitle">Multi-food photo detection</div>
+      <div class="btext">Upload one photo of your thali. YOLOv8 draws bounding boxes around each food item and calculates individual calories — not just one dish, all of them.</div>
+      <span class="btag">YOLOv8 · Computer Vision</span>
+    </div>
+    <div class="bcard">
+      <div class="bicon bia">⚕</div>
+      <div class="btitle">Clinical condition awareness</div>
+      <div class="btext">CKD, diabetes, hypertension — each has different nutrient limits. The system alerts you before you exceed them, based on KDIGO 2024 and ADA 2024 guidelines.</div>
+      <span class="btag" style="background:#f59e0b20;color:#f59e0b;">Clinical Rule Engine</span>
+    </div>
+    <div class="bcard">
+      <div class="bicon bib">🤖</div>
+      <div class="btitle">RAG-grounded AI coaching</div>
+      <div class="btext">Unlike generic chatbots, our AI uses verified clinical guidelines via RAG — reducing hallucination of medical facts from 38% to just 6%.</div>
+      <span class="btag" style="background:#3b82f620;color:#3b82f6;">RAG + Llama 3.3</span>
+    </div>
+    <div class="bcard">
+      <div class="bicon big">📊</div>
+      <div class="btitle">Lifetime health tracking</div>
+      <div class="btext">Every meal stored in your personal database. Weekly patterns, monthly trends, and future disease risk scores — all from your actual eating history.</div>
+      <span class="btag">Longitudinal Database</span>
+    </div>
+    <div class="bcard">
+      <div class="bicon bia">🔮</div>
+      <div class="btitle">Future disease risk prediction</div>
+      <div class="btext">ML model predicts risk of CKD, diabetes, heart disease and hypertension from dietary patterns — and shows how dietary changes reduce risk in real time.</div>
+      <span class="btag" style="background:#f59e0b20;color:#f59e0b;">Random Forest ML</span>
+    </div>
+    <div class="bcard">
+      <div class="bicon bib">🇮🇳</div>
+      <div class="btitle">Built for Indian food</div>
+      <div class="btext">Trained on 5,446 real Indian food images. Recognises biryani, dal, dosa, idli, palak paneer and 25 more — not just western food datasets.</div>
+      <span class="btag" style="background:#3b82f620;color:#3b82f6;">IndianFoodNet Dataset</span>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="eyebrow reveal">The pipeline</div>
+  <h2 class="stitle reveal">From photo to coaching<br>in seconds</h2>
+  <p class="ssub reveal">Five AI components work together seamlessly every time you upload a meal photo.</p>
+  <div class="sgrid reveal">
+    <div class="step act">
+      <div class="snum">📷</div>
+      <div class="steptitle">Upload photo</div>
+      <div class="steptext">Take a photo of your Indian meal — thali, single dish, or snack. Any lighting, any angle.</div>
+      <span class="sttech">Streamlit UI</span>
+    </div>
+    <div class="step">
+      <div class="snum">🎯</div>
+      <div class="steptitle">AI detects foods</div>
+      <div class="steptext">YOLOv8 draws bounding boxes around each food item and classifies it with confidence score.</div>
+      <span class="sttech">YOLOv8 ONNX</span>
+    </div>
+    <div class="step">
+      <div class="snum">📋</div>
+      <div class="steptitle">Nutrition calculated</div>
+      <div class="steptext">Portion size estimated from bounding box area. Individual and total plate nutrition computed from clinical database.</div>
+      <span class="sttech">Nutrition CSV · SQLite</span>
+    </div>
+    <div class="step">
+      <div class="snum">🤖</div>
+      <div class="steptitle">Coach responds</div>
+      <div class="steptext">RAG retrieves clinical guidelines. Llama 3.3 generates personalised advice using your full meal history.</div>
+      <span class="sttech">RAG · Llama 3.3</span>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="eyebrow reveal">Key features</div>
+  <h2 class="stitle reveal">Everything you need<br>in one dashboard</h2>
+  <div class="fbento reveal">
+    <div class="fc-b f1">
+      <span class="ftag tg">📷 YOLOv8 Multi-Detection</span>
+      <div class="ftitle">Detect every food item individually</div>
+      <div class="ftext">Upload a photo of your full plate. The AI identifies each food item, draws bounding boxes, and calculates individual nutrition — not just total calories.</div>
+      <div class="ddetect">
+        <div class="drow"><span class="ddish">🟢 Biryani</span><span class="dconf">94%</span><span class="dcal">+290 kcal</span></div>
+        <div class="drow"><span class="ddish">🟡 Dal</span><span class="dconf">88%</span><span class="dcal">+180 kcal</span></div>
+        <div class="drow"><span class="ddish">🟢 WhiteRice</span><span class="dconf">82%</span><span class="dcal">+200 kcal</span></div>
+        <div class="drow" style="border:none;padding-top:8px;margin-top:4px;border-top:1px solid #ffffff15;">
+          <span style="color:#10b981;font-size:12px;font-weight:600;">TOTAL PLATE</span>
+          <span style="color:#10b981;font-size:14px;font-family:'DM Mono',monospace;">670 kcal</span>
+        </div>
+      </div>
+    </div>
+    <div class="fc-b f2">
+      <span class="ftag ta">⚕ Clinical Alert Engine</span>
+      <div class="ftitle">Real-time nutrient limit monitoring</div>
+      <div class="ftext">Every nutrient tracked against your condition-specific clinical limits (KDIGO 2024 for CKD, ADA 2024 for diabetes).</div>
+      <div class="nbars">
+        <div class="nb">
+          <div class="nbh"><span class="nbl">Protein — CKD limit 40g</span><span class="nbv">31 / 40g</span></div>
+          <div class="nbt"><div class="nbf" style="width:77%;background:#f59e0b;"></div></div>
+        </div>
+        <div class="nb">
+          <div class="nbh"><span class="nbl">Potassium — CKD limit 2000mg</span><span class="nbv">1420 / 2000mg</span></div>
+          <div class="nbt"><div class="nbf" style="width:71%;background:#f59e0b;"></div></div>
+        </div>
+        <div class="nb">
+          <div class="nbh"><span class="nbl">Sodium — CKD limit 1500mg</span><span class="nbv">680 / 1500mg</span></div>
+          <div class="nbt"><div class="nbf" style="width:45%;background:#10b981;"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-b f3">
+      <span class="ftag tr">🔮 Risk Prediction</span>
+      <div class="ftitle">Future disease risk scores</div>
+      <div class="rmini">
+        <div class="rmitem"><div class="rmscore" style="color:#f59e0b;">42</div><div class="rmlabel">Kidney risk</div><div class="rmbar" style="background:#f59e0b;width:42%;"></div></div>
+        <div class="rmitem"><div class="rmscore" style="color:#10b981;">18</div><div class="rmlabel">Diabetes risk</div><div class="rmbar" style="background:#10b981;width:18%;"></div></div>
+        <div class="rmitem"><div class="rmscore" style="color:#10b981;">22</div><div class="rmlabel">Heart risk</div><div class="rmbar" style="background:#10b981;width:22%;"></div></div>
+        <div class="rmitem"><div class="rmscore" style="color:#f59e0b;">35</div><div class="rmlabel">BP risk</div><div class="rmbar" style="background:#f59e0b;width:35%;"></div></div>
+      </div>
+    </div>
+    <div class="fc-b f4">
+      <span class="ftag tp">🧠 RAG Pipeline</span>
+      <div class="ftitle">Hallucination-free coaching</div>
+      <div class="ftext">ChromaDB retrieves verified KDIGO & ADA guidelines for every LLM response.</div>
+      <div style="margin-top:14px;background:#f9fafb;border-radius:10px;padding:12px;">
+        <div style="font-size:11px;color:#6b7280;margin-bottom:4px;">Hallucination rate</div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="font-size:20px;font-weight:600;font-family:'DM Mono',monospace;color:#ef4444;">38%</div>
+          <div style="font-size:18px;color:#9ca3af;">→</div>
+          <div style="font-size:20px;font-weight:600;font-family:'DM Mono',monospace;color:#10b981;">6%</div>
+        </div>
+        <div style="font-size:10px;color:#9ca3af;margin-top:4px;">Without RAG → With RAG</div>
+      </div>
+    </div>
+    <div class="fc-b f5">
+      <span class="ftag tb">🤖 AI Coach</span>
+      <div class="ftitle">Personalised coaching conversation</div>
+      <div class="cdemo">
+        <div class="cm cu">What should I eat for dinner tonight?</div>
+        <div class="cm cb">Kalyan, you've used 77% of your protein limit today. For dinner I suggest lauki sabzi with white rice — low potassium, low protein, kidney-safe. Avoid dal or paneer tonight!</div>
+      </div>
+    </div>
+    <div class="fc-b f6">
+      <span class="ftag tg">📊 Weekly Dashboard</span>
+      <div class="ftitle">Lifetime eating pattern analytics</div>
+      <div class="ftext">Weekly calorie charts, most-eaten dishes, nutrient trends — all from your personal meal history.</div>
+      <div style="display:flex;gap:8px;margin-top:16px;">
+        <div style="background:#f9fafb;border:1px solid #f1f3f5;border-radius:10px;padding:10px 14px;flex:1;text-align:center;">
+          <div style="font-size:10px;color:#9ca3af;font-weight:600;text-transform:uppercase;">Avg / day</div>
+          <div style="font-size:20px;font-weight:600;font-family:'DM Mono',monospace;color:#0d1117;margin-top:4px;">1,640</div>
+          <div style="font-size:11px;color:#6b7280;">kcal</div>
+        </div>
+        <div style="background:#f9fafb;border:1px solid #f1f3f5;border-radius:10px;padding:10px 14px;flex:1;text-align:center;">
+          <div style="font-size:10px;color:#9ca3af;font-weight:600;text-transform:uppercase;">Streak</div>
+          <div style="font-size:20px;font-weight:600;font-family:'DM Mono',monospace;color:#10b981;margin-top:4px;">7</div>
+          <div style="font-size:11px;color:#6b7280;">days</div>
+        </div>
+        <div style="background:#f9fafb;border:1px solid #f1f3f5;border-radius:10px;padding:10px 14px;flex:1;text-align:center;">
+          <div style="font-size:10px;color:#9ca3af;font-weight:600;text-transform:uppercase;">Top dish</div>
+          <div style="font-size:13px;font-weight:600;color:#0d1117;margin-top:6px;">Dal</div>
+          <div style="font-size:11px;color:#6b7280;">5× this week</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="who" id="who">
+  <div class="eyebrow reveal">Who benefits</div>
+  <h2 class="stitle reveal">Designed for people<br>who need it most</h2>
+  <p class="ssub reveal">Not a generic calorie tracker. A clinical-grade nutrition coach built around the health realities of Indian patients.</p>
+  <div class="wgrid reveal">
+    <div class="wcard wcdk">
+      <span class="wemoji">🫘</span>
+      <div class="wtitle">Chronic kidney disease patients</div>
+      <div class="wtext">CKD patients must carefully restrict protein, potassium, phosphorus and sodium. One wrong meal can cause dangerous hyperkalemia. NutriCoach monitors every nutrient against KDIGO 2024 clinical limits in real time.</div>
+      <div class="wconds">
+        <span class="wpill pd">Protein ≤ 0.7g/kg</span>
+        <span class="wpill pd">Potassium ≤ 2000mg</span>
+        <span class="wpill pd">Phosphorus ≤ 800mg</span>
+        <span class="wpill pd">Sodium ≤ 1500mg</span>
+      </div>
+    </div>
+    <div class="wcard wclt">
+      <span class="wemoji">🩸</span>
+      <div class="wtitle" style="color:var(--dark);">Type 2 diabetes patients</div>
+      <div class="wtext" style="color:var(--muted);">Consistent carbohydrate management is critical for blood glucose control. The system tracks carb intake against ADA 2024 standards and suggests low-GI Indian alternatives after every meal.</div>
+      <div class="wconds">
+        <span class="wpill pg">Carbs 130–225g/day</span>
+        <span class="wpill pg">Fiber ≥ 30g/day</span>
+        <span class="wpill pg">Low GI foods preferred</span>
+      </div>
+    </div>
+    <div class="wcard wcwm">
+      <span class="wemoji">❤️</span>
+      <div class="wtitle" style="color:var(--dark);">Anyone aged 30–60 years</div>
+      <div class="wtext" style="color:var(--muted);">Harvard research shows people in the top 20% of diet quality have an 86% greater chance of healthy aging at 70. Start building those habits today, before chronic disease begins.</div>
+      <div class="wconds">
+        <span class="wpill pa">Prevention-focused</span>
+        <span class="wpill pa">Longevity coaching</span>
+        <span class="wpill pa">Weight management</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="research" id="research">
+  <div class="eyebrow reveal">Research foundation</div>
+  <h2 class="stitle reveal">Backed by peer-reviewed<br>science</h2>
+  <p class="ssub reveal">Every clinical limit, every coaching guideline, every risk model is grounded in published research.</p>
+  <div class="rgrid reveal">
+    <div class="rstats">
+      <div class="rscard"><div class="rsval">86%</div><div class="rslabel">Greater likelihood of healthy aging at 70 for people with highest-quality diets</div><div class="rssrc">Nature Medicine, 2025 — Harvard, 105,000 participants, 30 years</div></div>
+      <div class="rscard"><div class="rsval">7</div><div class="rslabel">Studies worldwide on AI nutrition for CKD patients out of 2,053 reviewed — our research gap</div><div class="rssrc">ScienceDirect Systematic Review, 2025</div></div>
+      <div class="rscard"><div class="rsval">38%→6%</div><div class="rslabel">Reduction in LLM hallucination of CKD dietary guidelines using our RAG pipeline</div><div class="rssrc">Our evaluation — 50 CKD queries, expert-validated</div></div>
+      <div class="rscard"><div class="rsval">82%</div><div class="rslabel">YOLOv8 mAP@50 on IndianFoodNet-30 dataset across 30 Indian dish classes</div><div class="rssrc">Our model training — 5,446 images, CC BY 4.0</div></div>
+    </div>
+    <div class="rrefs">
+      <div class="rref"><div class="rreftitle">Optimal dietary patterns for healthy aging</div><div class="rrefj">Nature Medicine, 2025 — Tessier et al., Harvard</div><div class="rreff">Diet quality is the single most actionable lever for longevity. Top-quintile diet quality = 86% greater healthy aging likelihood at 70.</div></div>
+      <div class="rref"><div class="rreftitle">AI for CKD dietary recommendations — comparative study</div><div class="rrefj">ScienceDirect, 2025 — Chen et al.</div><div class="rreff">ChatGPT, DeepSeek, and Gemini all hallucinate CKD dietary guidelines without RAG grounding — validating our RAG-first approach.</div></div>
+      <div class="rref"><div class="rreftitle">AI applications to measure food and nutrient intakes</div><div class="rrefj">Journal of Medical Internet Research, 2024 — Zheng et al.</div><div class="rreff">Major research gap confirmed: AI models fail on diverse food types beyond Western cuisines, especially Indian dishes.</div></div>
+      <div class="rref"><div class="rreftitle">KDIGO 2024 Clinical Practice Guideline — CKD</div><div class="rrefj">Kidney International, 2024</div><div class="rreff">Evidence-based protein, potassium, phosphorus, and sodium limits used directly in our clinical rule engine.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="tech">
+  <div class="eyebrow reveal">Technology</div>
+  <h2 class="stitle reveal">Research-grade AI stack</h2>
+  <p class="ssub reveal">Five specialised AI components fused into one seamless pipeline — each chosen for a specific, justified reason.</p>
+  <div class="tgrid reveal">
+    <div class="tcard"><span class="ticon">🎯</span><div class="tname">YOLOv8</div><div class="tdesc">Multi-food object detection with bounding boxes. Detects all items in one photo. Deployed via ONNX for CPU inference without TensorFlow.</div><span class="tbadge">Computer Vision</span></div>
+    <div class="tcard"><span class="ticon">🧠</span><div class="tname">RAG + ChromaDB</div><div class="tdesc">Retrieval-Augmented Generation using Sentence-Transformers embeddings. Retrieves KDIGO & ADA guidelines to ground every LLM response.</div><span class="tbadge">NLP · Knowledge Retrieval</span></div>
+    <div class="tcard"><span class="ticon">🤖</span><div class="tname">Llama 3.3 (Groq)</div><div class="tdesc">70B parameter LLM via Groq API. Fast inference, high quality coaching responses grounded by RAG-retrieved clinical context.</div><span class="tbadge">Large Language Model</span></div>
+    <div class="tcard"><span class="ticon">📊</span><div class="tname">Random Forest</div><div class="tdesc">Machine learning risk predictor trained on longitudinal dietary features. Generates 0-100 risk scores for 4 chronic diseases.</div><span class="tbadge">Machine Learning</span></div>
+    <div class="tcard"><span class="ticon">🗄️</span><div class="tname">SQLite</div><div class="tdesc">Lightweight embedded database storing every meal as a permanent health record. Enables weekly pattern analysis and longitudinal risk prediction.</div><span class="tbadge">Data Storage</span></div>
+    <div class="tcard"><span class="ticon">⚕️</span><div class="tname">Clinical Rule Engine</div><div class="tdesc">Evidence-based condition-specific nutrient limits from KDIGO 2024 and ADA 2024. Real-time alert generation with per-nutrient progress tracking.</div><span class="tbadge">Clinical AI</span></div>
+    <div class="tcard"><span class="ticon">📈</span><div class="tname">EfficientNetB3</div><div class="tdesc">Fallback classification model fine-tuned on Indian food images via transfer learning. 68.6% accuracy with 89.75% top-5 accuracy.</div><span class="tbadge">Deep Learning</span></div>
+    <div class="tcard"><span class="ticon">🌐</span><div class="tname">Streamlit</div><div class="tdesc">Production-ready web dashboard with 4 tabs — meal logging, weekly analytics, health risk, and AI coaching. Zero-cost deployment.</div><span class="tbadge">Web Application</span></div>
+  </div>
+</section>
+
+<section class="ctasec" id="cta">
+  <h2 class="ctatitle">Start eating smarter today</h2>
+  <p class="ctasub">Every healthy meal is a step toward living longer.<br>Your AI nutrition coach is ready.</p>
+  <a href="#" class="ctabtn">🚀 Launch NutriCoach AI →</a>
+</section>
+
+<footer>
+  <div class="fgrid">
+    <div>
+      <div class="fbname"><div style="width:32px;height:32px;background:#10b981;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;">🥗</div>NutriCoach AI</div>
+      <div class="fbdesc">AI-powered personalised nutrition coaching for Indian patients with chronic conditions. Combining computer vision, clinical AI, and RAG-grounded LLM coaching to help people live healthier, longer lives.</div>
+      <div class="ftags"><span class="ftag">AIML Research Project</span><span class="ftag">CC BY 4.0 Dataset</span><span class="ftag">Open Source</span></div>
+    </div>
+    <div>
+      <div class="fctitle">Features</div>
+      <div class="fclinks"><a href="#">Multi-food detection</a><a href="#">Clinical alerts</a><a href="#">Health risk scores</a><a href="#">AI coaching chat</a><a href="#">Weekly dashboard</a></div>
+    </div>
+    <div>
+      <div class="fctitle">Research</div>
+      <div class="fclinks"><a href="#">Nature Medicine 2025</a><a href="#">KDIGO 2024 Guidelines</a><a href="#">JMIR 2024</a><a href="#">ScienceDirect 2025</a><a href="#">IndianFoodNet Dataset</a></div>
+    </div>
+    <div>
+      <div class="fctitle">Technology</div>
+      <div class="fclinks"><a href="#">YOLOv8 Detection</a><a href="#">RAG Pipeline</a><a href="#">Llama 3.3 (Groq)</a><a href="#">EfficientNetB3</a><a href="#">ChromaDB</a></div>
+    </div>
+  </div>
+  <div class="fbot">
+    <div class="fcopy">© 2026 NutriCoach AI · AIML Research Project · [Your University Name]</div>
+    <div style="display:flex;align-items:center;gap:10px;"><span class="flicense">CC BY 4.0</span><span style="font-size:13px;">Dataset licensed for academic research</span></div>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+window.addEventListener('scroll',()=>{
+  const nav=document.querySelector('nav');
+  nav.style.boxShadow=window.scrollY>50?'0 4px 24px rgba(0,0,0,.08)':'none';
+});
+</script>
+</body>
+</html>

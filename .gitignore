@@ -1,0 +1,30 @@
+# Virtual environments
+venv/
+ncoach_env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# Environment variables / secrets
+.env
+
+# Databases & vector stores
+chroma_db/
+*.db
+
+# ML model files
+models/*.onnx
+models/*.pt
+models/*.pth
+models/*.h5
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db

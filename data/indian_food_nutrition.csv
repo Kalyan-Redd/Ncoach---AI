@@ -1,0 +1,65 @@
+dish_name,calories,protein_g,carbs_g,fat_g,potassium_mg,phosphorus_mg,sodium_mg,fiber_g,category
+AlooGobi,140,3,16,6,320,75,420,4.2,vegetable
+AlooMasala,160,3,22,6,380,80,440,3.8,vegetable
+Bhatura,280,7,38,12,180,110,480,2.2,bread
+BhindiMasala,110,3,12,6,280,60,380,3.5,vegetable
+Biryani,290,9,45,8,180,140,520,1.2,rice
+Chai,60,2,10,2,80,60,40,0.1,drink
+Chole,230,12,32,6,480,210,520,9.5,dal
+CoconutChutney,140,2,8,12,180,65,220,3.2,condiment
+Dal,180,11,22,6,520,190,420,5.5,dal
+Dosa,170,4,30,4,95,80,320,1.8,south_indian
+DumAloo,170,3,24,7,420,85,460,3.2,vegetable
+FishCurry,240,26,8,12,480,340,680,1.2,fish
+Ghevar,380,6,58,14,120,90,180,1.2,sweet
+GreenChutney,60,2,8,2,240,50,320,2.8,condiment
+GulabJamun,380,6,62,14,95,90,220,0.5,sweet
+Idli,120,4,22,1,75,60,180,1.2,south_indian
+Jalebi,380,2,72,12,45,30,180,0.3,sweet
+Kebab,280,22,8,18,380,280,620,1.5,chicken
+Kheer,220,6,38,6,240,160,120,0.5,sweet
+Kulfi,220,5,32,8,180,140,120,0.5,sweet
+Lassi,180,8,28,5,320,220,80,0.2,drink
+MuttonCurry,320,28,6,20,420,310,720,0.8,mutton
+OnionPakoda,240,7,28,12,180,95,480,3.8,snack
+PalakPaneer,260,14,10,18,420,310,390,3.2,paneer
+Poha,180,4,34,4,210,85,310,2.4,breakfast
+RajmaCurry,230,15,38,2,600,240,380,9.8,dal
+RasMalai,200,6,28,7,180,140,120,0.3,sweet
+Samosa,280,6,36,14,210,100,580,3.2,snack
+ShahiPaneer,340,16,14,24,280,290,520,1.8,paneer
+WhiteRice,200,4,42,1,80,60,5,0.8,rice
+Dal Makhani,330,18,28,14,820,290,480,6.0,dal
+Palak Paneer,260,14,10,18,420,310,390,3.2,paneer
+Butter Chicken,240,22,8,14,340,220,680,0.5,curry
+Chole Bhature,410,14,52,16,480,210,620,7.5,street_food
+Rajma,230,15,38,2,600,240,380,9.8,dal
+Pav Bhaji,310,8,42,12,520,140,890,4.2,street_food
+Vada Pav,290,7,44,9,210,110,740,2.8,street_food
+Aloo Paratha,350,8,54,11,420,150,480,3.5,bread
+Upma,190,5,32,5,180,95,420,2.8,breakfast
+Rava Dosa,190,4,28,6,85,75,380,1.2,south_indian
+Medu Vada,180,6,22,8,140,110,380,2.5,south_indian
+Uttapam,190,6,28,5,160,120,340,2.8,south_indian
+Rasam,45,2,8,1,290,55,480,1.5,south_indian
+Paneer Tikka,280,20,8,18,240,320,520,1.2,paneer
+Chicken Tikka Masala,260,24,10,14,380,280,720,1.5,curry
+Tandoori Chicken,200,30,3,7,480,310,650,0.5,chicken
+Khichdi,190,8,32,4,280,120,220,3.8,rice
+Roti,110,3,22,1,95,65,180,2.8,bread
+Naan,280,8,46,7,120,95,480,1.5,bread
+Chapati,120,3,24,1,90,60,160,3.2,bread
+Dal Tadka,180,11,22,6,520,190,420,5.5,dal
+Moong Dal,160,11,24,2,480,190,280,5.8,dal
+Lauki Sabzi,55,2,10,1,260,40,180,2.8,vegetable
+Aloo Sabzi,140,3,26,4,480,70,380,3.8,vegetable
+Baingan Bharta,120,4,16,5,420,85,280,4.5,vegetable
+Gobi Masala,120,4,16,6,320,75,420,4.2,vegetable
+Mattar Paneer,240,12,16,15,320,260,480,4.8,paneer
+Kadai Paneer,290,16,12,20,260,280,560,2.2,paneer
+Chicken Curry,270,26,8,15,420,290,680,1.5,chicken
+Egg Bhurji,210,13,4,16,220,240,480,0.8,egg
+Plain Rice,200,4,42,1,80,60,5,0.8,rice
+Curd Rice,220,7,36,4,240,180,120,1.2,south_indian
+Dhokla,130,7,22,3,160,90,480,2.5,snack
+Masala Chai,80,2,14,2,80,60,40,0.2,drink

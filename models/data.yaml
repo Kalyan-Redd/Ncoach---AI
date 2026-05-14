@@ -1,0 +1,42 @@
+names:
+- AlooGobi
+- AlooMasala
+- Bhatura
+- BhindiMasala
+- Biryani
+- Chai
+- Chole
+- CoconutChutney
+- Dal
+- Dosa
+- DumAloo
+- FishCurry
+- Ghevar
+- GreenChutney
+- GulabJamun
+- Idli
+- Jalebi
+- Kebab
+- Kheer
+- Kulfi
+- Lassi
+- MuttonCurry
+- OnionPakoda
+- PalakPaneer
+- Poha
+- RajmaCurry
+- RasMalai
+- Samosa
+- ShahiPaneer
+- WhiteRice
+nc: 30
+path: /content/IndianFoodNet-1
+roboflow:
+  license: CC BY 4.0
+  project: indianfoodnet
+  url: https://universe.roboflow.com/indianfoodnet/indianfoodnet/dataset/1
+  version: 1
+  workspace: indianfoodnet
+test: ../test/images
+train: ../train/images
+val: ../valid/images

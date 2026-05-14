@@ -1,0 +1,24 @@
+# UI
+streamlit==1.32.0
+
+# Data & ML
+pillow>=10.0.0
+numpy>=1.23.5
+pandas>=1.5.0
+scikit-learn>=1.2.0
+xgboost>=1.7.0
+
+# Model inference (no TensorFlow needed!)
+onnxruntime>=1.16.0
+
+# RAG / NLP
+chromadb>=0.4.15
+sentence-transformers>=2.2.2
+
+# LLM
+google-generativeai>=0.4.1
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.18.0
